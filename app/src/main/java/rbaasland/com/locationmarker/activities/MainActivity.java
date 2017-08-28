@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
         saveLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MapsActivity.class));
                 Toast.makeText(getApplicationContext(), "Save Button clicked!", Toast.LENGTH_LONG).show();
             }
         });
