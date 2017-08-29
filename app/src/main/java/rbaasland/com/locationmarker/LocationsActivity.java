@@ -1,4 +1,4 @@
-package rbaasland.com.locationmarker.activities;
+package rbaasland.com.locationmarker;
 
 import android.app.Activity;
 import android.app.ListActivity;

@@ -1,4 +1,4 @@
-package rbaasland.com.locationmarker.activities;
+package rbaasland.com.locationmarker;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,8 +7,6 @@ import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import rbaasland.com.locationmarker.R;
 
 public class MainActivity extends Activity {
     @Override
