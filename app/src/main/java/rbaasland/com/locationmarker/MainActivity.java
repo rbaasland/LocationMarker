@@ -1,9 +1,13 @@
 package rbaasland.com.locationmarker;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -20,8 +24,79 @@ public class MainActivity extends Activity {
         saveLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MapsActivity.class));
-                Toast.makeText(getApplicationContext(), "Save Button clicked!", Toast.LENGTH_LONG).show();
+            LocationMarkerDbHelper mDbHelper = new LocationMarkerDbHelper(MainActivity.this);
+
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(LocationMarkerContract.LocationMarker.COLUMN_NAME_DESCRIPTION, "TEST-Description");
+            values.put(LocationMarkerContract.LocationMarker.COLUMN_NAME_LATITUDE, "TEST-Latitude");
+            values.put(LocationMarkerContract.LocationMarker.COLUMN_NAME_LONGITUDE, "TEST-Longitude");
+            values.put(LocationMarkerContract.LocationMarker.COLUMN_NAME_DATE, "TEST-Date");
+
+            long newRowId = db.insert(
+                    LocationMarkerContract.LocationMarker.TABLE_NAME,
+                    null,
+                    values
+            );
+
+            SQLiteDatabase db2 = mDbHelper.getReadableDatabase();
+
+            // Define a projection that specifies which columns from the database
+            // you will actually use after this query.
+            String[] projection = {
+                    LocationMarkerContract.LocationMarker.COLUMN_NAME_MARKER_ID,
+                    LocationMarkerContract.LocationMarker.COLUMN_NAME_LATITUDE,
+                    LocationMarkerContract.LocationMarker.COLUMN_NAME_LONGITUDE,
+                    LocationMarkerContract.LocationMarker.COLUMN_NAME_DESCRIPTION,
+                    LocationMarkerContract.LocationMarker.COLUMN_NAME_DATE
+            };
+
+            String[] selection = {
+                    LocationMarkerContract.LocationMarker.COLUMN_NAME_MARKER_ID,
+                    LocationMarkerContract.LocationMarker.COLUMN_NAME_LATITUDE,
+                    LocationMarkerContract.LocationMarker.COLUMN_NAME_LONGITUDE,
+                    LocationMarkerContract.LocationMarker.COLUMN_NAME_DESCRIPTION,
+                    LocationMarkerContract.LocationMarker.COLUMN_NAME_DATE
+            };
+
+            // How you want the results sorted in the resulting Cursor
+            String sortOrder =
+                    LocationMarkerContract.LocationMarker.COLUMN_NAME_MARKER_ID + " DESC";
+
+            Cursor cursor = db2.query(
+                    LocationMarkerContract.LocationMarker.TABLE_NAME,                     // The table to query
+                    projection,                               // The columns to return
+                    null,                                       // The columns for the WHERE clause
+                    null,                                       // The values for the WHERE clause
+                    null,                                     // don't group the rows
+                    null,                                     // don't filter by row groups
+                    sortOrder                                 // The sort order
+            );
+
+            while(cursor.moveToNext()) {
+                long itemId = cursor.getLong(
+                        cursor.getColumnIndexOrThrow(LocationMarkerContract.LocationMarker.COLUMN_NAME_MARKER_ID));
+
+                String longitude = cursor.getString(
+                        cursor.getColumnIndexOrThrow(LocationMarkerContract.LocationMarker.COLUMN_NAME_LONGITUDE));
+
+                String latitude = cursor.getString(
+                        cursor.getColumnIndexOrThrow(LocationMarkerContract.LocationMarker.COLUMN_NAME_LATITUDE));
+
+                String description = cursor.getString(
+                        cursor.getColumnIndexOrThrow(LocationMarkerContract.LocationMarker.COLUMN_NAME_DESCRIPTION));
+
+                String date = cursor.getString(
+                        cursor.getColumnIndexOrThrow(LocationMarkerContract.LocationMarker.COLUMN_NAME_DATE));
+
+                Log.d("TT_MARKER_ID", itemId + "");
+                Log.d("TT_MARKER_LONGITUDE", longitude + "");
+                Log.d("TT_MARKER_LATITUDE", latitude + "");
+                Log.d("TT_MARKER_DESCRIPTION", description + "");
+                Log.d("TT_MARKER_DATE", date + "");
+            }
+            cursor.close();
             }
         });
 
