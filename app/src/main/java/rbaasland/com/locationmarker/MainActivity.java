@@ -12,6 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+
 public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,26 +28,25 @@ public class MainActivity extends Activity {
         saveLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "SAve Button clicked!", Toast.LENGTH_LONG).show();
             LocationMarkerDbHelper mDbHelper = new LocationMarkerDbHelper(MainActivity.this);
 
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
             ContentValues values = new ContentValues();
             values.put(LocationMarkerContract.LocationMarker.COLUMN_NAME_DESCRIPTION, "TEST-Description");
-            values.put(LocationMarkerContract.LocationMarker.COLUMN_NAME_LATITUDE, "TEST-Latitude");
-            values.put(LocationMarkerContract.LocationMarker.COLUMN_NAME_LONGITUDE, "TEST-Longitude");
+            values.put(LocationMarkerContract.LocationMarker.COLUMN_NAME_LATITUDE, "-10.0");
+            values.put(LocationMarkerContract.LocationMarker.COLUMN_NAME_LONGITUDE, "20.0");
             values.put(LocationMarkerContract.LocationMarker.COLUMN_NAME_DATE, "TEST-Date");
 
             long newRowId = db.insert(
-                    LocationMarkerContract.LocationMarker.TABLE_NAME,
-                    null,
-                    values
+                LocationMarkerContract.LocationMarker.TABLE_NAME,
+                null,
+                values
             );
 
             SQLiteDatabase db2 = mDbHelper.getReadableDatabase();
 
-            // Define a projection that specifies which columns from the database
-            // you will actually use after this query.
             String[] projection = {
                     LocationMarkerContract.LocationMarker.COLUMN_NAME_MARKER_ID,
                     LocationMarkerContract.LocationMarker.COLUMN_NAME_LATITUDE,
@@ -74,7 +77,10 @@ public class MainActivity extends Activity {
                     sortOrder                                 // The sort order
             );
 
+            ArrayList<Location> listOfMarkers = new ArrayList<Location>();
+
             while(cursor.moveToNext()) {
+                Location cursorLocation = new Location();
                 long itemId = cursor.getLong(
                         cursor.getColumnIndexOrThrow(LocationMarkerContract.LocationMarker.COLUMN_NAME_MARKER_ID));
 
@@ -90,11 +96,12 @@ public class MainActivity extends Activity {
                 String date = cursor.getString(
                         cursor.getColumnIndexOrThrow(LocationMarkerContract.LocationMarker.COLUMN_NAME_DATE));
 
-                Log.d("TT_MARKER_ID", itemId + "");
-                Log.d("TT_MARKER_LONGITUDE", longitude + "");
-                Log.d("TT_MARKER_LATITUDE", latitude + "");
-                Log.d("TT_MARKER_DESCRIPTION", description + "");
-                Log.d("TT_MARKER_DATE", date + "");
+                cursorLocation.setmLocationId(itemId);
+                cursorLocation.setLatitude(-10.00);
+                cursorLocation.setLongitude(20.01);
+                cursorLocation.setDescription(description);
+
+                listOfMarkers.add(cursorLocation);
             }
             cursor.close();
             }
