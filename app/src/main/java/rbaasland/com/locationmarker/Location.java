@@ -1,13 +1,21 @@
-package models;
+package rbaasland.com.locationmarker;
 
 import java.util.Date;
 
-public class marker {
+public class Location{
+    private long mLocationId;
     public double mLongitude;
     public double mLatitude;
     public String mDescription;
     public Date mDate;
 
+    public long getmLocationId() {
+        return mLocationId;
+    }
+
+    public void setmLocationId(long mLocationId) {
+        this.mLocationId = mLocationId;
+    }
     public double getLongitude() {
         return mLongitude;
     }
@@ -34,6 +42,10 @@ public class marker {
 
     public Date getDate() {
         return mDate;
+    }
+
+    public void setDateCurrent() {
+        mDate = new Date();
     }
 
     public void setDate(Date date) {

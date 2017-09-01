@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:background="@drawable/gradient_bg"
@@ -10,7 +11,20 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="rbaasland.com.locationmarker.activities.MainActivity">
+    tools:context="rbaasland.com.locationmarker.MainActivity">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/map_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/save_loc_btn"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:padding="64dp"
+        android:tint="#FFFFFFFF"
+        android:visibility="visible"
+        app:srcCompat="@drawable/ic_map_black_150dp" />
 
     <Button
         android:id="@+id/save_loc_btn"
@@ -18,14 +32,32 @@
         android:textColor="#FFFFFF"
         android:textSize="32sp"
         android:layout_width="match_parent"
-        android:background="#88FFFFFF"
+        android:background="#44FFFFFF"
         android:shadowColor="#A8A8A8"
         android:shadowDx="4"
         android:shadowDy="4"
         android:shadowRadius="5"
         android:elevation="1dp"
-        android:layout_height="150dp"
-        android:layout_centerVertical="true"
+        android:layout_height="100dp"
+        android:layout_above="@+id/view_loc_btn"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="17dp" />
+    <Button
+        android:id="@+id/view_loc_btn"
+        android:text="View Locations"
+        android:textColor="#FFFFFF"
+        android:textSize="32sp"
+        android:layout_width="match_parent"
+        android:background="#44FFFFFF"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="5"
+        android:elevation="1dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>
