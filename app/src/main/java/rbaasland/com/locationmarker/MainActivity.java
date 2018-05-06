@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
             Toast.makeText(getApplicationContext(), "SAve Button clicked!", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(MainActivity.this, LocationsActivity.class));
             }
         });
 
@@ -36,8 +37,8 @@ public class MainActivity extends Activity {
         viewLocationsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LocationsActivity.class));
-                Toast.makeText(getApplicationContext(), "View Button clicked!", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(MainActivity.this, MapsActivity.class));
+            Toast.makeText(getApplicationContext(), "View Button clicked!", Toast.LENGTH_LONG).show();
             }
         });
     }
